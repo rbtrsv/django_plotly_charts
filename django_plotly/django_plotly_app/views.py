@@ -2,7 +2,7 @@ from django.shortcuts import render
 from plotly.offline import plot
 import plotly.graph_objects as go
 
-
+# https://albertrtk.github.io/2021/01/24/Graph-on-a-web-page-with-Plotly-and-Django.html
 def demo_plot_view(request):
     """ 
     View demonstrating how to display a graph object
@@ -51,3 +51,31 @@ def demo_plot_view(request):
 
     return render(request, 'demo-plot.html', 
                   context={'plot_div': plot_div})
+
+# https://www.codingwithricky.com/2019/08/28/easy-django-plotly/
+from django.shortcuts import render
+from plotly.offline import plot
+from plotly.graph_objs import Scatter
+
+def index(request):
+    x_data = [0,1,2,3]
+    y_data = [x**2 for x in x_data]
+    plot_div = plot([Scatter(x=x_data, y=y_data,
+                        mode='lines', name='test',
+                        opacity=0.8, marker_color='green')],
+               output_type='div')
+    return render(request, "index.html", context={'plot_div': plot_div})
+
+
+def index(request):
+    x_data = [0,1,2,3]
+    y_data = [x**2 for x in x_data]
+    plot_div = plot([Scatter(x=x_data, y=y_data,
+                        mode='lines', name='test',
+                        opacity=0.8, marker_color='green')],
+                        output_type='div',
+                        include_plotlyjs=False,
+                        show_link=False,
+                        link_text="")
+    return render(request, "index.html", context={'plot_div': plot_div})
+
